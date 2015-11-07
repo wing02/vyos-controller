@@ -4,12 +4,12 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 	<servlet>
-		<servlet-name>Test</servlet-name>
-		<servlet-class>com.scutpress.cloud.wechat.servlet.CoreServlet</servlet-class>
+		<servlet-name>InputServlet</servlet-name>
+		<servlet-class>com.github.wing02.vyoscontroller.servlet.InputServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>Test</servlet-name>
-		<url-pattern>/coreServlet</url-pattern>
+		<servlet-name>InputServlet</servlet-name>
+		<url-pattern>/InputServlet</url-pattern>
 	</servlet-mapping>
 </web-app>
   
