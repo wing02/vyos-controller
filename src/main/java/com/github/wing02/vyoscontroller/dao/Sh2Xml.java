@@ -6,7 +6,7 @@ import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 public class Sh2Xml {
-	String sh2Xml(String shStr) {
+	public String sh2Xml(String shStr) {
 		tokens = shStr.split("\\s+");
 
 		String rootValue = "zone-policy";
@@ -26,7 +26,7 @@ public class Sh2Xml {
 	static int i;
 	static String tokens[];
 
-	static void setSh2Xml(Element root) {
+	private static void setSh2Xml(Element root) {
 		Element now = null;
 		while (i < tokens.length) {
 			if (tokens[i].equals("{")) {

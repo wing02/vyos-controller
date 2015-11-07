@@ -3,19 +3,21 @@ package com.github.wing02.vyoscontroller.servlet;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class InputServlet extends HttpServlet {
+import com.github.wing02.vyoscontroller.service.ZonePolicyService;
+
+public class ShowZonePolicyServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	
-	
+	private ZonePolicyService zonePolicyService = new ZonePolicyService();
 
-	public InputServlet() {
+	public ShowZonePolicyServlet() {
 		super();
 	}
 
@@ -30,25 +32,9 @@ public class InputServlet extends HttpServlet {
 			throws ServletException, IOException {
 		response.setCharacterEncoding("GBK");
 		response.setContentType("text/html");
-
-		String info = request.getParameter("info");
-		try {
-			Process ps = Runtime.getRuntime().exec(info);
-			ps.waitFor();
-			BufferedReader br = new BufferedReader(new InputStreamReader(ps.getInputStream()));
-			StringBuffer sb = new StringBuffer();
-			String line;
-			while ((line = br.readLine()) != null) {
-				sb.append(line).append("<br>");
-				System.out.println(line);
-			}
-			String result = sb.toString();
-			// System.out.println(result);
-			request.getSession().setAttribute("result", result);
-			response.sendRedirect("index.jsp");
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		String xmlStr = zonePolicyService.showZonePolicy();
+		PrintWriter out = response.getWriter();
+		out.print(xmlStr);
+		out.close();
 	}
-
 }

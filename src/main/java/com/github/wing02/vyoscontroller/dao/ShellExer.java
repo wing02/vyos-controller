@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class ShellExer {
-	String execShell(String shReq) {
+	public String execShell(String shReq) {
 		String shResp = null;
 		try {
 			Process ps = Runtime.getRuntime().exec(shReq);
