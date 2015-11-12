@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 public class InputServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	
-	
 
 	public InputServlet() {
 		super();
@@ -42,10 +40,12 @@ public class InputServlet extends HttpServlet {
 				sb.append(line).append("<br>");
 				System.out.println(line);
 			}
+			System.out.println("Get InputServlet");
 			String result = sb.toString();
 			// System.out.println(result);
 			request.getSession().setAttribute("result", result);
 			response.sendRedirect("index.jsp");
+			//ps.destroy();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

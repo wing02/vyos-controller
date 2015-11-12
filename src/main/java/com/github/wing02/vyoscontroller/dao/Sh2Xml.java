@@ -6,6 +6,11 @@ import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 public class Sh2Xml {
+
+	public Sh2Xml() {
+
+	}
+
 	public String sh2Xml(String shStr) {
 		tokens = shStr.split("\\s+");
 

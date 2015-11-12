@@ -4,6 +4,11 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class ShellExer {
+
+	public ShellExer() {
+
+	}
+
 	public String execShell(String shReq) {
 		String shResp = null;
 		try {
@@ -18,6 +23,7 @@ public class ShellExer {
 			}
 			shResp = sb.toString();
 			// System.out.println(result);
+			ps.destroy();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -1,40 +1,110 @@
 package com.github.wing02.vyoscontroller.servlet;
 
-import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.StringReader;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 
 import com.github.wing02.vyoscontroller.service.ZonePolicyService;
 
 public class ShowZonePolicyServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
-	private ZonePolicyService zonePolicyService = new ZonePolicyService();
+	private ZonePolicyService zonePolicyService = null;
 
 	public ShowZonePolicyServlet() {
 		super();
+		zonePolicyService = new ZonePolicyService();
 	}
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		this.doPost(request, response);
 	}
 
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.setCharacterEncoding("GBK");
-		response.setContentType("text/html");
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/xml;charset=GBK");
+
 		String xmlStr = zonePolicyService.showZonePolicy();
 		PrintWriter out = response.getWriter();
-		out.print(xmlStr);
-		out.close();
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		try {
+			StringReader sr = new StringReader(xmlStr);
+			InputSource is = new InputSource(sr);
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder;
+			builder = factory.newDocumentBuilder();
+			Document doc = builder.parse(is);
+
+			TransformerFactory tf = TransformerFactory.newInstance();
+			Transformer t = tf.newTransformer();
+			t.setOutputProperty(OutputKeys.ENCODING, "GBK");
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(bos);
+			t.transform(source, result);
+			out.println(bos);
+//			System.out.println(bos);
+			out.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
+
+	// public void doGet(HttpServletRequest request, HttpServletResponse
+	// response) throws ServletException, IOException {
+	// this.doPost(request, response);
+	// }
+	//
+	// public void doPost(HttpServletRequest request, HttpServletResponse
+	// response) throws ServletException, IOException {
+	// response.setContentType("text/xml;charset=GBK");
+	// PrintWriter out = response.getWriter();
+	// ByteArrayOutputStream bos = new ByteArrayOutputStream();
+	// try {
+	// DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	// DocumentBuilder builder = factory.newDocumentBuilder();
+	// Document doc = builder.newDocument();
+	// String data[] = { "beijing", "nanjing", "shanghai", "tianjin",
+	// "xianggang" };
+	// Element allarea = doc.createElement("allarea");
+	// for (int x = 0; x < data.length; x++) {
+	// Element area = doc.createElement("area");
+	// Element id = doc.createElement("id");
+	// Element title = doc.createElement("title");
+	// id.appendChild(doc.createTextNode("" + (x + 1)));
+	// title.appendChild(doc.createTextNode(data[x]));
+	// area.appendChild(id);
+	// area.appendChild(title);
+	// allarea.appendChild(area);
+	// }
+	// doc.appendChild(allarea);
+	// TransformerFactory tf = TransformerFactory.newInstance();
+	// Transformer t = tf.newTransformer();
+	// t.setOutputProperty(OutputKeys.ENCODING, "GBK");
+	// DOMSource source = new DOMSource(doc);
+	// StreamResult result = new StreamResult(bos);
+	// t.transform(source, result);
+	// out.println(bos);
+	// System.out.println(bos);
+	// out.close();
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
 }

@@ -11,5 +11,24 @@
 		<servlet-name>InputServlet</servlet-name>
 		<url-pattern>/InputServlet</url-pattern>
 	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>ShowZonePolicyServlet</servlet-name>
+		<servlet-class>com.github.wing02.vyoscontroller.servlet.ShowZonePolicyServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ShowZonePolicyServlet</servlet-name>
+		<url-pattern>/ShowZonePolicyServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>CityServlet</servlet-name>
+		<servlet-class>com.github.wing02.vyoscontroller.servlet.CityServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CityServlet</servlet-name>
+		<url-pattern>/CityServlet</url-pattern>
+	</servlet-mapping>
 </web-app>
   

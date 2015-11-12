@@ -2,6 +2,14 @@
 
 body {
 	padding-top: 50px;
+	margin: 0;
+	text-align: center;
+}
+
+#container {width 966px;
+	margin: 0 auto;
+	text-align: left;
+	height: 800px;
 }
 
 h2 {
@@ -12,5 +20,5 @@ h2 {
 th {
 	text-align: right;
 	margin: 0 auto;
-	font-size:20px;
+	font-size: 20px;
 }
